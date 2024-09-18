@@ -28,6 +28,17 @@ pipeline {
                     sh 'mvn test'
                 }
 
+                post {
+                    success {
+                        // Publicar resultados de las pruebas unitarias
+                        junit '**/target/surefire-reports/*.xml'
+                        // Almacenar los artefactos generados
+                        archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+                        // Stash del archivo JAR para uso en etapas posteriores
+                        stash includes: 'target/*.jar', name: 'app-jar'
+                    }
+                }
+            }
                 
             
             
