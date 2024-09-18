@@ -19,7 +19,7 @@ pipeline {
         stage('Build') {
             
             agent { label 'node1' } 
-            parallel{
+           
                 steps {
                     sh 'mvn spring-javaformat:apply'
                     // Ejecutar Gradle para compilar y ejecutar pruebas unitarias
@@ -28,11 +28,22 @@ pipeline {
                     sh 'mvn test'
                 }
 
-                steps {
-                    sh 'mvn javadoc:javadoc'
-                }
-            }
+                
             
+            
+        }
+
+        stage('Javadoc Generation') {
+            agent { label 'node1' }
+            steps {
+                // Generar la documentación Javadoc con Maven
+                sh 'mvn javadoc:javadoc'
+            }
+            //post {
+            //    success {
+            //        archiveArtifacts artifacts: '**/target/site/apidocs/**', allowEmptyArchive: true // Almacenar la documentación generada
+            //    }
+            //}
         }
 
         
