@@ -19,14 +19,19 @@ pipeline {
         stage('Build') {
             
             agent { label 'node1' } 
-            steps {
-                sh 'mvn spring-javaformat:apply'
-                // Ejecutar Gradle para compilar y ejecutar pruebas unitarias
-                sh "mvn clean install -DskipTests=true"
+            parallel{
+                steps {
+                    sh 'mvn spring-javaformat:apply'
+                    // Ejecutar Gradle para compilar y ejecutar pruebas unitarias
+                    sh "mvn clean install -DskipTests=true"
 
-                sh 'mvn test'
+                    sh 'mvn test'
+                }
+
+                steps {
+                    sh 'mvn javadoc:javadoc'
+                }
             }
-            
             
         }
 
