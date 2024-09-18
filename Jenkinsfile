@@ -38,7 +38,6 @@ pipeline {
                         stash includes: 'target/*.jar', name: 'app-jar'
                     }
                 }
-            }
                 
             
             
