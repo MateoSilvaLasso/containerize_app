@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+
 package org.springframework.samples.petclinic;
 
 import org.springframework.boot.SpringApplication;
@@ -29,6 +30,7 @@ import org.testcontainers.containers.MySQLContainer;
  * @author Dave Syer
  *
  */
+/*
 @Configuration
 public class MysqlTestApplication {
 
@@ -44,3 +46,4 @@ public class MysqlTestApplication {
 	}
 
 }
+*/

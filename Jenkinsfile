@@ -21,7 +21,7 @@ pipeline {
             agent { label 'node1' } 
             steps {
                 // Ejecutar Gradle para compilar y ejecutar pruebas unitarias
-                sh "mvn test -Punit-tests-vet"
+                sh "mvn test"
             }
             post {
                 // Almacenar los resultados de las pruebas unitarias
