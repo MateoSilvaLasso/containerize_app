@@ -30,7 +30,7 @@ import org.testcontainers.containers.MySQLContainer;
  * @author Dave Syer
  *
  */
-/*
+
 @Configuration
 public class MysqlTestApplication {
 
@@ -46,4 +46,3 @@ public class MysqlTestApplication {
 	}
 
 }
-*/

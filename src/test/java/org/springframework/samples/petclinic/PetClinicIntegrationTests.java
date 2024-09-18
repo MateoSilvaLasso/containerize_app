@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* 
+
 
 package org.springframework.samples.petclinic;
 
@@ -63,4 +63,4 @@ public class PetClinicIntegrationTests {
 	}
 
 }
-	*/
+	
