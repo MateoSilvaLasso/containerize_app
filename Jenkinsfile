@@ -26,13 +26,7 @@ pipeline {
 
                 sh 'mvn test'
             }
-            post {
-                // Almacenar los resultados de las pruebas unitarias
-                success {
-                    junit '**/build/test-results/test/*.xml'
-                    archiveArtifacts 'build/libs/*.jar'
-                }
-            }
+            
             
         }
 
