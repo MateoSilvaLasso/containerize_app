@@ -36,7 +36,9 @@ pipeline {
         stage('Javadoc Generation') {
             agent { label 'node1' }
             steps {
-                // Generar la documentación Javadoc con Maven
+                
+                sh 'mvn spring-javaformat:apply'
+
                 sh 'mvn javadoc:javadoc'
             }
             //post {
