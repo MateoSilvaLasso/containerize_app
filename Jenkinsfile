@@ -41,11 +41,11 @@ pipeline {
 
                 sh 'mvn javadoc:javadoc'
             }
-            //post {
-            //    success {
-            //        archiveArtifacts artifacts: '**/target/site/apidocs/**', allowEmptyArchive: true // Almacenar la documentación generada
-            //    }
-            //}
+            post {
+               success {
+                   archiveArtifacts artifacts: '**/target/site/apidocs/**', allowEmptyArchive: true // Almacenar la documentación generada
+               }
+            }
         }
 
         
