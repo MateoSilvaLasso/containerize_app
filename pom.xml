@@ -441,6 +441,24 @@
         </pluginManagement>
       </build>
     </profile>
+    <profile>
+    <id>unit-tests-vet</id>
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.9.9</version> <!-- Ajusta la versión según sea necesario -->
+          <configuration>
+            <includes>
+              <!-- Incluye solo pruebas unitarias en la carpeta vet -->
+              <include>org/springframework/samples/petclinic/vet/**/*Tests.java</include>
+            </includes>
+          </configuration>
+        </plugin>
+      </plugins>
+    </build>
+  </profile>
   </profiles>
 
 </project>
