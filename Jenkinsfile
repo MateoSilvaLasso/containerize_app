@@ -65,6 +65,7 @@ pipeline {
                 unstash 'app-jar'
 
                 script {
+                    sh 'mvn spring-javaformat:apply'
                     // Construir la imagen Docker usando el Dockerfile del repositorio
                     sh 'docker build -t my-app .'
                     
