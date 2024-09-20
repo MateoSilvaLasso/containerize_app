@@ -25,7 +25,7 @@ pipeline {
                     // Ejecutar Gradle para compilar y ejecutar pruebas unitarias
                     sh "mvn clean install -DskipTests=true"
 
-                    sh 'mvn test'
+                    sh 'mvn clean test'
                 }
 
                 post {
