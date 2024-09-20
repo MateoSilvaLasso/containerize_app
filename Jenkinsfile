@@ -21,11 +21,11 @@ pipeline {
             agent { label 'node1' } 
            
                 steps {
-                    sh 'mvn spring-javaformat:apply'
+                    //sh 'mvn spring-javaformat:apply'
                     // Ejecutar Gradle para compilar y ejecutar pruebas unitarias
-                    sh "mvn clean install -DskipTests=true"
+                    sh "./gradlew clean build -x test"
 
-                    sh 'mvn clean test'
+                    sh './gradlew clean test'
                 }
 
                 post {
