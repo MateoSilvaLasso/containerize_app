@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-/* 
 package org.springframework.samples.petclinic;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -139,4 +138,3 @@ public class PostgresIntegrationTests {
 	}
 
 }
-*/
