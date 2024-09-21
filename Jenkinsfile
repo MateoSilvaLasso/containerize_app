@@ -21,8 +21,7 @@ pipeline {
             agent { label 'node1' } 
            
                 steps {
-                    sh './gradlew spotlessApply
-'
+                    sh './gradlew spotlessApply'
                     // Ejecutar Gradle para compilar y ejecutar pruebas unitarias
                     sh "./gradlew clean build -x test"
 
