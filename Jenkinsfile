@@ -21,7 +21,8 @@ pipeline {
             agent { label 'node1' } 
            
                 steps {
-                    //sh 'mvn spring-javaformat:apply'
+                    sh './gradlew spotlessApply
+'
                     // Ejecutar Gradle para compilar y ejecutar pruebas unitarias
                     sh "./gradlew clean build -x test"
 
