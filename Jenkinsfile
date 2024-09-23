@@ -23,7 +23,7 @@ pipeline {
                 steps {
                     sh 'mvn spring-javaformat:apply'
                     // Ejecutar Gradle para compilar y ejecutar pruebas unitarias
-                    sh "mvn clean install -DskipTests=true"
+                    sh "mvn clean package -DskipTests=true"
 
                     sh 'mvn clean test'
 
@@ -34,8 +34,6 @@ pipeline {
                     success {
                         // Publicar resultados de las pruebas unitarias
                         junit '**/target/surefire-reports/*.xml'
-                        // Almacenar los artefactos generados
-                        archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
                         // Stash del archivo JAR para uso en etapas posteriores
                         stash includes: 'target/*.jar', name: 'app-jar'
                     }
