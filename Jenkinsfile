@@ -26,6 +26,8 @@ pipeline {
                     sh "mvn clean install -DskipTests=true"
 
                     sh 'mvn clean test'
+
+                    sh 'ls -la target'
                 }
 
                 post {
