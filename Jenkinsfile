@@ -21,7 +21,7 @@ pipeline {
             agent { label 'node1' } 
            
                 steps {
-                    sh './gradlew spotlessApply'
+                    sh './gradlew format'
                     // Ejecutar Gradle para compilar y ejecutar pruebas unitarias
                     sh "./gradlew clean build -x test"
 
@@ -78,19 +78,21 @@ pipeline {
                 // Ejecutar pruebas de integración
                 sh 'mvn verify -Pintegration-tests'
             }
-            post {
-                always {
-                    script {
+            
+            //post {
+            //    always {
+            //        script {
                         // Detener y eliminar el contenedor Docker después de las pruebas
-                        sh 'docker stop my-app-container || true'
-                        sh 'docker rm my-app-container || true'
-                    }
-                }
-                success {
+            //            sh 'docker stop my-app-container || true'
+            //           sh 'docker rm my-app-container || true'
+            //        }
+            //    }
+            //    success {
                     // Publicar resultados de las pruebas de integración
-                    junit '**/target/failsafe-reports/*.xml'
-                }
-            }
+            //        junit '**/target/failsafe-reports/*.xml'
+            //    }
+            //}
+            
         }
 
         
