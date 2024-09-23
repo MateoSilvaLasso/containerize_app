@@ -26,6 +26,8 @@ pipeline {
                     sh "./gradlew clean build -x test"
 
                     sh './gradlew clean test'
+
+                    sh ' ls -la'
                 }
 
                 post {
