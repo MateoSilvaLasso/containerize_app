@@ -27,7 +27,7 @@ pipeline {
                     // Ejecutar Gradle para compilar y ejecutar pruebas unitarias
                     sh "mvn clean package -DskipTests=true"
 
-                    sh 'mvn clean test -Dspring.profiles.active=postgres'
+                    sh 'mvn clean test' //-Dspring.profiles.active=postgres
 
                     sh 'ls -la target'
                 }
