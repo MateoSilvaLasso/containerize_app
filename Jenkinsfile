@@ -13,6 +13,8 @@ pipeline {
             agent { label 'node1' } 
             steps {
                 checkout scm
+                stash includes: '**', name: 'source'
+
             }
         }
 
@@ -35,7 +37,7 @@ pipeline {
                         // Publicar resultados de las pruebas unitarias
                         junit '**/target/surefire-reports/*.xml'
                         // Stash del archivo JAR para uso en etapas posteriores
-                        stash includes: 'target/*.jar', name: 'app-jar'
+                        stash includes: '**', name: 'app-jar'
                     }
                 }
                 
