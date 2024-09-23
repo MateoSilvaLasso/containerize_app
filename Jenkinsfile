@@ -21,13 +21,11 @@ pipeline {
             agent { label 'node1' } 
            
                 steps {
-                    sh './gradlew format'
+                    sh 'mvn spring-javaformat:apply'
                     // Ejecutar Gradle para compilar y ejecutar pruebas unitarias
-                    sh "./gradlew clean build -x test"
+                    sh "mvn clean install -DskipTests=true"
 
-                    sh './gradlew clean test'
-
-                    sh ' ls -la'
+                    sh 'mvn clean test'
                 }
 
                 post {
@@ -80,21 +78,19 @@ pipeline {
                 // Ejecutar pruebas de integración
                 sh 'mvn verify -Pintegration-tests'
             }
-            
             //post {
             //    always {
             //        script {
-                        // Detener y eliminar el contenedor Docker después de las pruebas
+            //            // Detener y eliminar el contenedor Docker después de las pruebas
             //            sh 'docker stop my-app-container || true'
-            //           sh 'docker rm my-app-container || true'
+            //            sh 'docker rm my-app-container || true'
             //        }
             //    }
             //    success {
-                    // Publicar resultados de las pruebas de integración
+            //        // Publicar resultados de las pruebas de integración
             //        junit '**/target/failsafe-reports/*.xml'
             //    }
             //}
-            
         }
 
         
