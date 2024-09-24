@@ -94,7 +94,7 @@ pipeline {
                 }
                 success {
                     
-                    junit '**/target/failsafe-reports/*.xml'
+                    junit '**/target/surefire-reports/*.xml'
                 }
             }
         }
