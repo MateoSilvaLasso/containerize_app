@@ -17,53 +17,57 @@ pipeline {
 
             }
         }
-
-        stage('Build') {
+        stage('Build and javadoc generation'){
+            parallel {
+                stage('Build') {
             
-            agent { label 'node1' } 
-           
-                steps {
-                    sh 'mvn spring-javaformat:apply'
-                    // Ejecutar Gradle para compilar y ejecutar pruebas unitarias
-                    sh "mvn clean package -DskipTests=true"
+                    agent { label 'node1' } 
+            
+                    steps {
+                        sh 'mvn spring-javaformat:apply'
+                    
+                        sh "mvn clean package -DskipTests=true"
 
-                    sh 'mvn clean test' //-Dspring.profiles.active=postgres
+                        sh 'mvn clean test' 
 
-                    sh 'ls -la target'
+                        sh 'ls -la target'
+                    }
+
+                    post {
+                        success {
+                            // Publicar resultados de las pruebas unitarias
+                            junit '**/target/surefire-reports/*.xml'
+                           
+                            stash includes: '**', name: 'app-jar'
+                        }
+                    }
+                    
+                
+                
                 }
 
-                post {
-                    success {
-                        // Publicar resultados de las pruebas unitarias
-                        junit '**/target/surefire-reports/*.xml'
-                        // Stash del archivo JAR para uso en etapas posteriores
-                        stash includes: '**', name: 'app-jar'
+                stage('Javadoc Generation') {
+                    agent { label 'node1' }
+                    steps {
+                        
+                        sh 'mvn spring-javaformat:apply'
+
+                        sh 'mvn javadoc:javadoc'
+                    }
+                    post {
+                        success {
+                            archiveArtifacts artifacts: '**/target/site/apidocs/**', allowEmptyArchive: true // Almacenar la documentación generada
+                        }
                     }
                 }
-                
-            
-            
-        }
-
-        stage('Javadoc Generation') {
-            agent { label 'node1' }
-            steps {
-                
-                sh 'mvn spring-javaformat:apply'
-
-                sh 'mvn javadoc:javadoc'
-            }
-            post {
-               success {
-                   archiveArtifacts artifacts: '**/target/site/apidocs/**', allowEmptyArchive: true // Almacenar la documentación generada
-               }
             }
         }
+        
 
         stage('Deploy and Integration Tests') {
             agent { label 'node2' } 
             steps {
-                // Recuperar el archivo JAR del nodo1
+                // Recuperar el archivo JAR
                 unstash 'app-jar'
 
                 script {
@@ -77,22 +81,22 @@ pipeline {
                 // Esperar a que la aplicación esté lista antes de ejecutar las pruebas de integración
                 sleep time: 15, unit: 'SECONDS'
 
-                // Ejecutar pruebas de integración
+                
                 sh 'mvn verify -Pintegration-tests'
             }
-            //post {
-            //    always {
-            //        script {
-            //            // Detener y eliminar el contenedor Docker después de las pruebas
-            //            sh 'docker stop my-app-container || true'
-            //            sh 'docker rm my-app-container || true'
-            //        }
-            //    }
-            //    success {
-            //        // Publicar resultados de las pruebas de integración
-            //        junit '**/target/failsafe-reports/*.xml'
-            //    }
-            //}
+            post {
+                always {
+                    script {
+                        // Detener y eliminar el contenedor Docker después de las pruebas
+                        sh 'docker stop my-app-container || true'
+                        sh 'docker rm my-app-container || true'
+                    }
+                }
+                success {
+                    
+                    junit '**/target/failsafe-reports/*.xml'
+                }
+            }
         }
 
         
